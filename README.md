@@ -4,41 +4,50 @@ This assignment is to make authentication.<br>
 This also includes HTML, JavaScript, CSS and PHP.<br> 
 This assignment is a continuation of [Web Application Security](https://github.com/DanielHakim01/Web-Application-Security) .<br> 
 
-## studentForm.HTML
+## register.html
 1. It is where we will take all the input needed from user<br>
-2. It takes name, matric number, current address, home address, email, phone number and home number<br>
+2. It takes username, email, password and confirm password<br>
 3. It uses POST method
-4. It has two different action. 1 is onsubmit="return validateForm(); where it will do client-side validation
-5. The other one is action="action.php" where it will do server-side validation
-6. Chooseeither one.
-7. Just change the code in line 11 [studentForm.html](studentForm.html) using :
 
-```
-<form class="studentForm" method="post" action="action.php">
-<form class="studentForm" method="post" onsubmit="return validateForm();">
-```
-* Click [studentForm.html](studentForm.html) to see how to see student form code
+* Click [register.html](register.html) to see how to see register page code
 
-## style.css
+## style3.css
 
 1. This is where all the customization done
 2. Used some code form existing project to create the style
 
-* Click [style.css](style.css) to see how to see style code
+* Click [style3.css](style3.css) to see how to see style code
 
-## script.js
+## register.php
 
-1. This is where we will validate input given by user on the client side
-2. Here the input will be compare by all the listed regex
-3. Then response messages will be displayed accordingly
+1. This is where we will authenticate our user
+2. Here the password and confirm password will be stored
+3. Then it will be compared with the confirm password to see if the password entered is the same
+4. Then it will be compare with any other password inside the database, if it is not exist, new user will be registered
+5. The password then will be hashed
 
-* Click [script.js](script.js) to see how to see the script code
+* Click [register.php](register.php) to see how to see the register code
 
-## action.php
+## login.html
+1. Here user have to input their email, username and password<br>
+2. It uses POST method
 
-1. This is where we will validate input given by the user on the server-side
-2. Just like in the [script.js](script.js) we wil compare the input by the user withe the listed regex
-3. Here we will compare whether the characterister of the input given by the user is comply with the regex
-4. Lastly message will be displayed
+* Click [login.html](login.html) to see how to see login page code
 
-* Click [action.php](action.php) to see how to see action code
+## style2.css
+
+1. This is where all the customization done
+2. Used some code form existing project to create the style
+
+* Click [style2.css](style2.css) to see how to see style code
+
+## login.php
+
+1. This is where we will authenticate theuser
+2. Here the email will be asked to check if the user is exist
+3. Then it will verify the user by calling the password
+4. If the password is correct it will redirect to the [studentForm.html](studentForm.html)
+5. If not user will have to input the information again
+
+* Click [login.php](login.php) to see how to see the login code
+
