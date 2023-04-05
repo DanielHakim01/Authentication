@@ -1,0 +1,61 @@
+html {
+    background-color: #F8F9F9;
+    background: linear-gradient(0deg, #000000 0%, #000000 80%, #0b4703 80%, #036408 100%);
+    padding: 30px;
+    height: 100%;
+}
+
+h2 {
+    margin: 0;
+    padding: 25px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #000000;
+    color: #00295e;
+    font-weight: 600;
+    background-color: #ffffff;
+}
+h2 i {
+    padding-right: 10px;
+    font-size: 24px;
+}
+
+.register
+{
+ 
+    margin: 0;
+    padding: 25px;
+    font-size: 20px;
+    text-align: center;
+    border-bottom: 1px solid #000000;
+    color: #000000;
+    font-weight: 600;
+    background-color: #ffffff;
+
+}
+
+input[type=text], input[type=password], input[type=email]
+{
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+  }
+  
+  button
+  {
+    background-color: #09442e;
+    color: rgb(0, 0, 0);
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  button:hover 
+  {
+    opacity: 0.8;
+  }
