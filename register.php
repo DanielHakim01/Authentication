@@ -1,61 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>User Registration</title>
+    <link rel="stylesheet" type="text/css" href="style3.css">
+    <script src="../app/script.js"></script>
+</head>
+<body>
+    <h2>Register</h2>
+    <form class="register" action="register.php" method="post">
+
+    <div class="form-group">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username"  pattern="[a-z0-9]+" required>
+        <span id="username-message" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" minlength="8" required>
+        <span id="password-message" class="text-danger"></span>
+    </div>
+    <input type="submit" class="btn btn-primary" value="Register"></button>
+    <p>Already have an account? <a style="color:red;" href="login.html" >Login here</a>.</p>
+    </form>
+    <?php
+	?>
+</body>
+</html>
+
 <?php
-// Connect to the database
-$database_host = "localhost";  // MySQL server address
-$database_user = "root";         // MySQL username
-$database_password = "";             // MySQL password
-$database_name = "user";           // MySQL database name
+session_start();
+// connect to database
+$database_host = 'localhost';
+$database_user = 'root';
+$database_password = '';
+$database_name = 'user_info';
 
-$conn = mysqli_connect("localhost", "root", "", "user");
+// connect to the database
+$conn = mysqli_connect($database_host, $database_user, $database_password, $database_name);
 
-// Check if the connection was successful
-if (!$conn) {
-	die("Connection failed: " . mysqli_connect_error());
-}
+// check if user has submitted the form
+if(isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-// Check if the form was submitted
-if (isset($_POST["submit"])) {
-	// Sanitize and validate the form data
-	$username = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
-	$email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
-	$password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
-	$confirm_password = filter_var($_POST["confirm_password"], FILTER_SANITIZE_STRING);
+    // Check if the username already exists in the database
+    $sql_check = "SELECT * FROM users WHERE username='$username'";
+    $result_check = mysqli_query($conn, $sql_check);
 
-	if (empty($username) || empty($email) || empty($password) || empty($confirm_password)) {
-		die("Please fill in all the required fields");
-	}
-
-	if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-		die("Invalid email format");
-	}
-
-	if ($password !== $confirm_password) {
-		die("Passwords do not match");
-	}
-
-	// Hash the password
-	$hashed_password = password_hash($password, PASSWORD_DEFAULT);
-
-	// Check if the user already exists in the database
-	$query = "SELECT * FROM user_info WHERE email='$email'";
-	$result = mysqli_query($conn, $query);
-
-	if (mysqli_num_rows($result) > 0) {
-		die("User already exists");
-	}
-
-	// Insert the user data into the database
-	$query = "INSERT INTO user_info (username, email, password) VALUES ('$username', '$email', '$hashed_password')";
-	$result = mysqli_query($conn, $query);
-
-	if ($result) {
-		// Registration successful
-		header("Location: login.html");
-		exit();
-	} else {
-		die("Could not register user: " . mysqli_error($conn));
-	}
-}
-
-// Close the database connection
-mysqli_close($conn);
-?>
+    if (mysqli_num_rows($result_check) > 0) {
+        // Show error message and redirect to registration page
+        echo "<script>showError('Error: Username already exists. Please choose a different username.');</script>";
+      } elseif (strlen($password) < 8) {
+        // Show error message and redirect to registration page
+        echo "<script>showError('Error: Password must be at least 8 characters long. Please try again.');</script>";
+      } elseif (!preg_match('/^[a-zA-Z0-9]+$/', $username)) {
+        // Show error message and redirect to registration page
+        echo "<script>showError('Error: Username must contain only letters and numbers. Please try again.');</script>";
+      } else {
+        // Insert the username and hashed password into the database
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $sql = "INSERT INTO users (username, password) VALUES ('$username','$hashed_password')";
+        $result = mysqli_query($conn, $sql);
+      
+        if ($result) {
+          // Get the generated ID
+          $id = mysqli_insert_id($conn);
+          // Registration successful, display success message and redirect to login page
+          echo "<script>alert('User registration successful! Please login.');</script>";
+          header("Location: ../public_html/login.html? success=User registration successful! Please login.");
+          exit();
+      }
+       else {
+          // Show error message and redirect to registration page
+          echo "<script>showError('Error: Could not register user. Please try again.');</script>";
+        }
+      }
+    }      
