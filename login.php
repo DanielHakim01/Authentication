@@ -1,42 +1,45 @@
 <?php
+session_start();
 
-$database_host = "localhost";  // MySQL server address
-$database_user = "root";         // MySQL username
-$database_password = "";             // MySQL password
-$database_name = "user";           // MySQL database name
+// connect to database
+$database_host = 'localhost';
+$database_user = 'root';
+$database_password = '';
+$database_name = 'user_info';
+$conn = mysqli_connect($database_host, $database_user, $database_password, $database_name);
 
-$conn = mysqli_connect("localhost", "root", "", "user");
+// check if user has submitted the form
+if(isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-// Check if the connection was successful
-if (!$conn) {
-  die("Connection failed: " . mysqli_connect_error());
-}
+    // retrieve user from database
+    $sql = "SELECT * FROM users WHERE username='$username'";
+    $result = mysqli_query($conn, $sql);
 
-// Sanitize and validate form data
-$username = filter_var($_POST["username"], FILTER_SANITIZE_STRING);
-$password = filter_var($_POST["password"], FILTER_SANITIZE_STRING);
-$email = filter_var($_POST["email"], FILTER_SANITIZE_EMAIL);
+    // check if user exists in the database
+    if(mysqli_num_rows($result) == 1) {
+        $row = mysqli_fetch_assoc($result);
+        $db_password = $row['password'];
 
-// Check if the user exists in the database
-$sql = "SELECT * FROM user_info WHERE email='$email'";
-$result = mysqli_query($conn, $sql);
+        // verify password
+        if (password_verify($password, $db_password)) {
+            // login successful, save user session
+            $_SESSION['username'] = $username;
 
-if (mysqli_num_rows($result) == 1) {
-  // Verify the password
-  $row = mysqli_fetch_assoc($result);
-  if (password_verify($password, $row['password'])) {
-    // Password is correct, start the session and redirect to the home page
-    session_start();
-    $_SESSION['email'] = $email;
-    header('Location: studentForm.html');
-  } else {
-    // Password is incorrect, show an error message
-    echo "Invalid email or password";
-  }
-} else {
-  // User does not exist in the database, show an error message
-  echo "Invalid email or password";
-}
-
-// Close the database connection
-mysqli_close($conn);
+            // redirect to home.php or privilege.php if the user name is "admin"
+            if($username === 'admin'){
+                header("Location: privilege.php");
+            } else {
+                header("Location: studentForm.html");
+            }
+        } else {
+            // login failed, display error message
+            header('Location: login.html?error=Invalid username or password.');
+        }
+    } else {
+        // login failed, display error message
+        header('Location: login.html?error=Invalid username.');
+    }
+}      
+?>
