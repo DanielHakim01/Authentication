@@ -1,61 +1,67 @@
 html {
-    background-color: #F8F9F9;
-    background: linear-gradient(0deg, #000000 0%, #000000 80%, #0b4703 80%, #036408 100%);
-    padding: 30px;
-    height: 100%;
+  background-color: #ffffff;
+  background: linear-gradient(0deg, #000000 0%, #000000 80%, #0b4703 80%, #036408 100%);
+  padding: 30px;
+  height: 100%;
 }
 
-h1 {
-    margin: 0;
-    padding: 25px;
-    font-size: 20px;
-    text-align: center;
-    border-bottom: 1px solid #000000;
-    color: #00295e;
-    font-weight: 600;
-    background-color: #ffffff;
-}
-h1 i {
-    padding-right: 10px;
-    font-size: 24px;
+.login{
+  background-color: #1b3f0b;
+  padding: 60px;
+  height: 100%;
+  color: #ffffff;
 }
 
-.login 
-{
- 
-    margin: 0;
-    padding: 25px;
-    font-size: 20px;
-    text-align: center;
-    border-bottom: 1px solid #000000;
-    color: #00295e;
-    font-weight: 600;
-    background-color: #ffffff;
-
+form {
+  width: 400px;
+  margin: auto;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-input[type=text], input[type=password], input[type=email]
-{
-    width: 100%;
-    padding: 12px 20px;
-    margin: 8px 0;
-    display: inline-block;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-  }
-  
-  button 
-  {
-    background-color: #09442e;
-    color: rgb(0, 0, 0);
-    padding: 14px 20px;
-    margin: 8px 0;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-  }
-  
-  button:hover 
-  {
-    opacity: 0.8;
-  }
+.error-message {
+  color: #04cc7f;
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+.error-message i {
+  margin-right: 5px;
+}
+
+
+h2 {
+  text-align: center;
+  color: #ffffff;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+  color: #ffffff;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: none;
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.1);
+}
+
+input[type="submit"] {
+  background-color: #000000;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #008311;
+}
